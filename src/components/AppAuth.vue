@@ -62,7 +62,7 @@
           </ul>
 
           <!-- Login Form -->
-          <form v-show="tab === 'login'">
+          <vee-form v-show="tab === 'login'">
             <!-- Email -->
             <div class="mb-3">
               <label class="inline-block mb-2">Email</label>
@@ -83,21 +83,23 @@
             </div>
             <button
               type="submit"
-              class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+              class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
             >
               Submit
             </button>
-          </form>
+          </vee-form>
           <!-- Registration Form -->
-          <form v-show="tab === 'register'">
+          <vee-form v-show="tab === 'register'" :validation-schema="schema">
             <!-- Name -->
             <div class="mb-3">
               <label class="inline-block mb-2">Name</label>
-              <input
+              <vee-field
                 type="text"
+                name="name"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Name"
               />
+              <ErrorMessage class="text-red-400" name="name" />
             </div>
             <!-- Email -->
             <div class="mb-3">
@@ -155,11 +157,11 @@
             </div>
             <button
               type="submit"
-              class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+              class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
             >
               Submit
             </button>
-          </form>
+          </vee-form>
         </div>
       </div>
     </div>
@@ -174,6 +176,15 @@ export default {
   data() {
     return {
       tab: "login",
+      schema: {
+        name: "required|min:3|max:100|alpha_spaces",
+        email: "",
+        age: "",
+        password: "",
+        confirm_password: "",
+        country: "",
+        tos: "",
+      },
     };
   },
   computed: {
@@ -186,4 +197,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>
