@@ -25,10 +25,7 @@
           <div class="flex justify-between items-center pb-4">
             <p class="text-2xl font-bold">Your Account</p>
             <!-- Modal Close Button -->
-            <div
-              class="modal-close cursor-pointer z-50"
-              @click="(modalVisibility = false), this.$validator.errors.clear()"
-            >
+            <div class="modal-close cursor-pointer z-50" @click="close">
               <i class="fas fa-times"></i>
             </div>
           </div>
@@ -90,7 +87,12 @@ export default {
       modalVisibility: "isOpen",
     }),
   },
-  methods: {},
+  mounted() {},
+  methods: {
+    close() {
+      this.modalVisibility = false;
+    },
+  },
   components: { LoginForm, RegisterForm },
 };
 </script>
