@@ -11,6 +11,7 @@
     :initial-values="initialValues"
     ref="form"
     @submit="login"
+    v-slot="{ meta }"
   >
     <!-- Email -->
     <div class="mb-3">
@@ -37,7 +38,8 @@
     </div>
     <button
       type="submit"
-      class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+      class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+      :disabled="!(meta.valid && meta.dirty)"
     >
       Submit
     </button>
@@ -56,16 +58,21 @@ export default {
         password: "required|min:9|max:100|excluded:password",
       },
       initialValues: { email: "", password: "" },
+      button_disabled: true,
       login_in_submission: false,
       login_show_alert: false,
       login_alert_variant: "bg-blue-500",
       login_alert_msg: "Please wait! We are logging you in.",
     };
   },
+  mounted() {
+    console.log("closed");
+  },
 
   methods: {
     ...mapActions(useUserStore, ["authenticate"]),
     async login(values) {
+      this.button_disabled = false;
       this.login_show_alert = true;
       this.login_in_submission = true;
       this.login_alert_variant = "bg-blue-500";
