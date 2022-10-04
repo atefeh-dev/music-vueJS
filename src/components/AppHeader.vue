@@ -9,12 +9,22 @@
         <ul class="flex flex-row mt-1">
           <!-- Navigation Links -->
           <!-- -->
-          <li @click.prevent="toggleAuthModal">
+          <li v-if="!userStore.userLoggedIn" @click.prevent="toggleAuthModal">
             <a class="px-2 text-white" href="#">Login / Register</a>
           </li>
-          <li>
-            <a class="px-2 text-white" href="#">Manage</a>
-          </li>
+          <template v-else>
+            <li>
+              <a
+                class="px-2 text-white"
+                href="#"
+                @click.prevent="userStore.signOut"
+                >logout</a
+              >
+            </li>
+            <li>
+              <a class="px-2 text-white" href="#">Manage</a>
+            </li>
+          </template>
         </ul>
       </div>
     </nav>
@@ -23,10 +33,11 @@
 <script>
 import { mapStores, mapWritableState } from "pinia";
 import useModalStore from "@/stores/modal";
+import useUserStore from "@/stores/user";
 export default {
   name: "AppHeader",
   computed: {
-    ...mapStores(useModalStore),
+    ...mapStores(useModalStore, useUserStore),
     ...mapWritableState(useModalStore, {
       modalVisibility: "isOpen",
     }),

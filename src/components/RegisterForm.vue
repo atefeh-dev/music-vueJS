@@ -113,9 +113,8 @@
 </template>
 
 <script>
-import { userCollection } from "../inclouds/firebase";
-import { mapWritableState } from "pinia";
-import useUserStore from "@/storee/user";
+import { mapActions } from "pinia";
+import useUserStore from "@/stores/user";
 import "firebase/firestore";
 export default {
   name: "RegisterForm",
@@ -144,49 +143,30 @@ export default {
     // if (this.errors) this.errors?.clear();
     // this.$refs.myForm.setFieldValue("email", "atefeh@example.com");
   },
-  computed: {
-    ...mapWritableState(useUserStore, ["userLoggedIn"]),
-  },
 
   methods: {
-    async register(values, { resetForm }) {
+    ...mapActions(useUserStore, {
+      createUser: "Register",
+    }),
+    async register(values) {
       this.reg_show_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = "bg-blue-500";
       this.reg_alert_message = "please wait your account is being created";
-      this.reg_alert_variant = "bg-green-500";
-      this.reg_alert_message = "success, your account has been created";
-      console.log(values);
-      // let userCred = null;
-      // try {
-      //   userCred = await auth().createUserWithEmailAndPassword(
-      //     values.email,
-      //     values.password
-      //   );
-      // } catch (error) {
-      //   this.reg_in_submission = false;
-      //   this.reg_alert_variant = "bg-red-500";
-      //   this.reg_alert_message =
-      //     "an unexpected error occurred, please try later";
-      //   return;
-      // }
+
       try {
-        await userCollection.add({
-          name: values.name,
-          email: values.email,
-          age: values.age,
-          country: values.country,
-        });
-        this.userStore.userLoggedIn = true;
-        resetForm();
+        await this.createUser(values);
       } catch (error) {
+        console.log(error);
         this.reg_in_submission = false;
         this.reg_alert_variant = "bg-red-500";
         this.reg_alert_message =
           "an unexpected error occurred, please try later";
-        resetForm();
         return;
       }
+      this.reg_alert_variant = "bg-green-500";
+      this.reg_alert_message = "success, your account has been created";
+      window.location.reload();
     },
   },
 };
