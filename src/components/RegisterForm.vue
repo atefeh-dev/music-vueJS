@@ -105,7 +105,7 @@
     </div>
     <button
       type="submit"
-      class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+      class="block w-full !bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
       :disabled="!(meta.valid && meta.dirty)"
     >
       Submit
@@ -131,6 +131,12 @@ export default {
         tos: "tos",
       },
       userData: {
+        name: "",
+        email: "",
+        age: "",
+        password: "",
+        confirm_password: "",
+        tos: "",
         country: "USA",
       },
       reg_in_submission: false,
