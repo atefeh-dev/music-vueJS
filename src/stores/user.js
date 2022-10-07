@@ -3,8 +3,14 @@ import { auth, userCollection } from "../inclouds/firebase";
 
 export default defineStore("user", {
   state: () => ({
+    loading: false,
     userLoggedIn: false,
   }),
+  getters: {
+    loadingClass(state) {
+      return state.loading ? "hidden" : "";
+    },
+  },
   actions: {
     async Register(values) {
       const userCred = await auth.createUserWithEmailAndPassword(
@@ -24,7 +30,7 @@ export default defineStore("user", {
     },
     async authenticate(values) {
       await auth.signInWithEmailAndPassword(values.email, values.password);
-
+      this.loading = false;
       this.userLoggedIn = true;
     },
     async signOut() {

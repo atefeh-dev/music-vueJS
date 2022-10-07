@@ -97,13 +97,13 @@
                   </div>
                   <button
                     type="submit"
-                    class="py-1.5 px-3 rounded text-white bg-green-600"
+                    class="py-1.5 px-3 rounded text-white !bg-green-600"
                   >
                     Submit
                   </button>
                   <button
                     type="button"
-                    class="py-1.5 px-3 rounded text-white bg-gray-600"
+                    class="py-1.5 px-3 rounded text-white !bg-gray-600 ml-2"
                   >
                     Go Back
                   </button>
@@ -159,12 +159,12 @@
               <div>
                 <h4 class="inline-block text-2xl font-bold">Song Name</h4>
                 <button
-                  class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
+                  class="ml-1 py-1 px-2 text-sm rounded text-white !bg-red-600 float-right"
                 >
                   <i class="fa fa-times"></i>
                 </button>
                 <button
-                  class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
+                  class="!bg-blue-600 ml-1 py-1 px-2 text-sm rounded text-white float-right"
                 >
                   <i class="fa fa-pencil-alt"></i>
                 </button>
@@ -181,7 +181,7 @@
 // import useUserStore from "@/stores/user";
 
 export default {
-  name: "Manage",
+  name: "ManageView",
   // beforeRouteEnter(to, from, next) {
   //   const store = useUserStore();
 
