@@ -50,13 +50,15 @@
           <ErrorMessage class="text-red-600" name="comment" />
           <button
             type="submit"
-            class="py-1.5 px-3 rounded text-white !bg-green-600 block"
+            class="py-1.5 px-3 rounded text-white !bg-green-600 block disabled:opacity-50"
+            :disabled="comment_in_submission"
           >
             Submit
           </button>
         </vee-form>
         <!-- Sort Comments -->
         <select
+          v-model="sort"
           class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         >
           <option value="1">Latest</option>
@@ -69,7 +71,7 @@
   <ul class="container mx-auto">
     <li
       class="p-6 bg-gray-50 border border-gray-200"
-      v-for="comment in comments"
+      v-for="comment in sortedComments"
       :key="comment.docID"
     >
       <!-- Comment Author -->
@@ -93,6 +95,7 @@ export default {
     return {
       song: {},
       comments: [],
+      sort: "1",
 
       schema: {
         comment: "required|min:3",
@@ -111,9 +114,19 @@ export default {
       return;
     }
     this.song = docSnapshot.data();
+    this.getComments();
   },
   computed: {
     ...mapState(useUserStore, ["userLoggedIn"]),
+    sortedComments() {
+      return this.comments.slice().sort((a, b) => {
+        if (this.sort === "1") {
+          return new Date(b.datePosted) - new Date(a.datePosted);
+        }
+
+        return new Date(a.datePosted) - new Date(b.datePosted);
+      });
+    },
   },
   methods: {
     async addComment(values, { resetForm }) {
@@ -139,7 +152,7 @@ export default {
       this.comment_alert_message = "Comment added!";
       setTimeout(() => {
         this.comment_show_alert = false;
-      }, 500);
+      }, 2000);
 
       resetForm();
     },
