@@ -11,20 +11,26 @@ const firebaseConfig = {
   appId: "1:451265693558:web:2e4acb4b8e6fb462c21c57",
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-const userCollection = db.collection("users");
+db.enablePersistence().catch((error) => {
+  console.log(`Firebase persistence error ${error.code}`);
+});
+
+const usersCollection = db.collection("users");
 const songsCollection = db.collection("songs");
 const commentsCollection = db.collection("comments");
 
 export {
   auth,
   db,
-  userCollection,
-  storage,
+  usersCollection,
   songsCollection,
   commentsCollection,
+  storage,
 };
